@@ -28,15 +28,19 @@ p{margin:0 0 1em;max-width:36em}
 
 /* corner logo + side rail */
 .logo{position:absolute;top:22px;left:var(--pad);display:block;line-height:0}
-.logo img{width:44px;height:44px;border-radius:10px;display:block}
+.logo img{width:52px;height:58px;display:block}
 .rail{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:20;padding:22px 22px 22px 26px;transition:background .25s}
 .rail ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;gap:16px}
 .rail a{display:flex;align-items:center;gap:14px;text-decoration:none;font-weight:700;font-stretch:112%;font-size:.95rem;color:var(--muted);transition:color .2s}
-.rail a i{display:block;width:16px;height:2px;background:currentColor;transition:width .3s var(--ease)}
+.rail li{opacity:0;transform:translateX(30px);animation:railIn .7s var(--ease) forwards;animation-delay:calc(.5s + var(--i)*.08s)}
+@keyframes railIn{to{opacity:1;transform:none}}
+.rail a i{display:block;width:16px;height:2px;background:currentColor;transition:width .45s cubic-bezier(.34,1.56,.64,1)}
+.rail a:hover i{width:46px}
 .rail a.on{color:var(--text)}
 .rail a.on i{width:34px}
 .rail a:hover{color:var(--text)}
-.lbl{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transform:translateX(14px);transition:max-width .35s var(--ease),opacity .25s,transform .35s var(--ease)}
+.lbl{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transform:translateX(18px);transition:max-width .4s var(--ease),opacity .3s,transform .45s var(--ease);transition-delay:calc(var(--i)*.045s)}
+.rail a:hover .lbl{transform:translateX(-6px)!important}
 .rail.open .lbl{max-width:12em;opacity:1;transform:none}
 .rail.open{background:var(--bg);box-shadow:-1px 0 0 var(--line)}
 @media (min-width:761px){
@@ -61,9 +65,12 @@ p{margin:0 0 1em;max-width:36em}
 
 /* sections: 12-column grid, items sit at different offsets */
 section{padding-block:clamp(88px,12vw,170px)}
-.g12{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:56px}
-.g12>*{grid-column:var(--c,1/-1)}
+.sec{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:48px}
+.col-s{grid-column:1/5}
+.col-m{grid-column:5/13}
 .hexmark{width:44px;height:50px;display:block;color:var(--text)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
 .princ h3{margin:18px 0 10px}
 .princ p{margin:0}
 .tile{background:var(--surface);clip-path:var(--chamfer);padding:clamp(28px,5vw,56px);min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px}
@@ -71,12 +78,6 @@ section{padding-block:clamp(88px,12vw,170px)}
 .facts{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:0 40px}
 .facts dt,.facts dd{margin:0;padding:15px 0;border-bottom:1px solid var(--line)}
 .facts dt{color:var(--muted)}
-.dl{display:grid;grid-template-columns:1.5fr 1fr 1.5fr;gap:24px;align-items:end}
-.dl a{display:block;text-decoration:none}
-.dl .thumb{background:var(--surface);aspect-ratio:3/2;display:grid;place-items:center;margin-bottom:12px;overflow:hidden}
-.dl img{max-width:100%;max-height:100%;display:block}
-.dl span{font-size:.95rem;color:var(--muted)}
-.dl a:hover span{color:var(--text)}
 .mail{font-weight:700;font-stretch:112%;word-break:break-all}
 
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding-block:32px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
@@ -93,11 +94,12 @@ footer nav{display:flex;gap:24px}
 .js [data-r].in{opacity:1;transform:none}
 
 @media (max-width:760px){
-  .g12>*{grid-column:1/-1;margin-top:0!important}
-  .g12{row-gap:40px}
+  .col-s,.col-m{grid-column:1/-1}
+  .sec{row-gap:32px}
+  .three,.two{grid-template-columns:1fr}
+  .three{gap:36px;margin-top:48px}
   .facts{grid-template-columns:1fr}
   .facts dt{border-bottom:0;padding-bottom:0}
-  .dl{grid-template-columns:1fr}
   .rail{top:14px;right:14px;transform:none;padding:0;background:transparent!important;box-shadow:none!important}
   .rail ul{display:none;margin-top:8px;padding:18px 20px;background:var(--bg);border:1px solid var(--text)}
   .rail.open ul{display:flex}
@@ -106,4 +108,5 @@ footer nav{display:flex;gap:24px}
 @media (prefers-reduced-motion:reduce){
   .js [data-r]{opacity:1;transform:none;transition:none}
   .btn::before,.lbl,.rail a i{transition:none}
+  .rail li{animation:none;opacity:1;transform:none}
 }

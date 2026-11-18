@@ -57,12 +57,58 @@
     document.querySelectorAll("main section").forEach(function (s) { so.observe(s); });
   }
 
-  // Cursor net: dots are pulled toward the pointer and linked to it with thin lines
+  // Cursor net: dots are pulled toward a center point and linked to it with thin lines.
+  // The center follows the mouse; with no mouse (touch, pointer left) it roams on its own.
+  // Text blocks are no-go zones: no dots, no lines and no center inside them.
   var c = document.getElementById("net");
   if (!c) return;
-  var x = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, P = [], G = 60, R = 170;
-  var m = { x: 0, y: 0, on: false, last: -9999 };
+  var x = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, P = [], G = 60, R = 125, PAD = 14;
+  var m = { x: 0, y: 0, on: false }, ctr = { x: -999, y: -999 };
   var INK = "20,20,20";
+  var HIT = document.querySelectorAll("main h1 span,main h2,main h3,main p,main dl,main .btn,main .tile,.logo,.rail,footer .wrap>span,footer nav a");
+  var rg = document.createRange();
+
+  function rects() {
+    var out = [];
+    HIT.forEach(function (el) {
+      var r;
+      if (/^(SPAN|H2|H3|P)$/.test(el.tagName) && !el.classList.contains("btn")) { rg.selectNodeContents(el); r = rg.getBoundingClientRect(); }
+      else r = el.getBoundingClientRect();
+      if (r.width && r.bottom > -40 && r.top < H + 40) out.push({ l: r.left - PAD, t: r.top - PAD, r: r.right + PAD, b: r.bottom + PAD });
+    });
+    return out;
+  }
+  function inside(px, py, RS) {
+    for (var i = 0; i < RS.length; i++) { var r = RS[i]; if (px > r.l && px < r.r && py > r.t && py < r.b) return true; }
+    return false;
+  }
+  function pushOut(px, py, RS) {
+    for (var k = 0; k < 3; k++) for (var i = 0; i < RS.length; i++) {
+      var r = RS[i];
+      if (px > r.l && px < r.r && py > r.t && py < r.b) {
+        var d = [px - r.l, r.r - px, py - r.t, r.b - py], mi = d.indexOf(Math.min.apply(null, d));
+        if (mi === 0) px = r.l - 1; else if (mi === 1) px = r.r + 1; else if (mi === 2) py = r.t - 1; else py = r.b + 1;
+      }
+    }
+    return { x: px, y: py };
+  }
+  // Liang-Barsky: does segment A-B cross rect r?
+  function crosses(ax, ay, bx, by, RS) {
+    var dx = bx - ax, dy = by - ay;
+    for (var i = 0; i < RS.length; i++) {
+      var r = RS[i], t0 = 0, t1 = 1, p = [-dx, dx, -dy, dy], q = [ax - r.l, r.r - ax, ay - r.t, r.b - ay], ok = true;
+      for (var j = 0; j < 4; j++) {
+        if (p[j] === 0) { if (q[j] < 0) { ok = false; break; } }
+        else {
+          var t = q[j] / p[j];
+          if (p[j] < 0) { if (t > t1) { ok = false; break; } if (t > t0) t0 = t; }
+          else { if (t < t0) { ok = false; break; } if (t < t1) t1 = t; }
+        }
+      }
+      if (ok) return true;
+    }
+    return false;
+  }
 
   function size() {
     W = innerWidth; H = innerHeight;
@@ -76,32 +122,42 @@
     }
   }
   function still() {
+    var RS = rects();
     x.clearRect(0, 0, W, H);
     x.fillStyle = "rgba(" + INK + ",.25)";
-    P.forEach(function (p) { x.beginPath(); x.arc(p.x, p.y, 1.5, 0, 6.3); x.fill(); });
+    P.forEach(function (p) { if (inside(p.x, p.y, RS)) return; x.beginPath(); x.arc(p.x, p.y, 1.5, 0, 6.3); x.fill(); });
   }
   function frame(t) {
-    var mx, my, real = m.on && t - m.last < 4000;
-    if (real) { mx = m.x; my = m.y; }
-    else { mx = W * (0.5 + 0.32 * Math.sin(t / 2600)); my = H * (0.5 + 0.3 * Math.sin(t / 3300 + 1)); }
+    var RS = rects(), tx, ty, real = m.on;
+    if (real) { tx = m.x; ty = m.y; }
+    else { tx = W * (0.5 + 0.36 * Math.sin(t / 2300)); ty = H * (0.5 + 0.34 * Math.sin(t / 3100 + 1)); }
+    var o = pushOut(tx, ty, RS);
+    if (ctr.x < -900) { ctr.x = o.x; ctr.y = o.y; }
+    var f = real ? 0.35 : 0.07;
+    ctr.x += (o.x - ctr.x) * f; ctr.y += (o.y - ctr.y) * f;
+    var mx = ctr.x, my = ctr.y;
     x.clearRect(0, 0, W, H);
     var near = [];
     for (var i = 0; i < P.length; i++) {
       var p = P[i], dx = mx - p.x, dy = my - p.y, d = Math.sqrt(dx * dx + dy * dy);
       var fx = (p.hx - p.x) * 0.06, fy = (p.hy - p.y) * 0.06, k = 0;
-      if (d < R) { k = 1 - d / R; fx += dx * k * 0.05; fy += dy * k * 0.05; p.d = d; p.k = k; near.push(p); }
+      var hidden = inside(p.x, p.y, RS);
+      if (d < R && !hidden) { k = 1 - d / R; fx += dx * k * 0.05; fy += dy * k * 0.05; p.k = k; near.push(p); }
       p.vx = (p.vx + fx) * 0.82; p.vy = (p.vy + fy) * 0.82; p.x += p.vx; p.y += p.vy;
+      if (hidden) continue;
       x.fillStyle = "rgba(" + INK + "," + (0.22 + k * 0.5) + ")";
       x.beginPath(); x.arc(p.x, p.y, 1.4 + k * 1.6, 0, 6.3); x.fill();
     }
     x.lineWidth = 1;
     for (var a = 0; a < near.length; a++) {
       var pa = near[a];
-      x.strokeStyle = "rgba(" + INK + "," + pa.k * 0.5 + ")";
-      x.beginPath(); x.moveTo(pa.x, pa.y); x.lineTo(mx, my); x.stroke();
+      if (!crosses(pa.x, pa.y, mx, my, RS)) {
+        x.strokeStyle = "rgba(" + INK + "," + pa.k * 0.5 + ")";
+        x.beginPath(); x.moveTo(pa.x, pa.y); x.lineTo(mx, my); x.stroke();
+      }
       for (var b = a + 1; b < near.length; b++) {
         var pb = near[b], ex = pa.x - pb.x, ey = pa.y - pb.y;
-        if (ex * ex + ey * ey < G * G * 2.2) {
+        if (ex * ex + ey * ey < G * G * 1.6 && !crosses(pa.x, pa.y, pb.x, pb.y, RS)) {
           x.strokeStyle = "rgba(" + INK + "," + Math.min(pa.k, pb.k) * 0.28 + ")";
           x.beginPath(); x.moveTo(pa.x, pa.y); x.lineTo(pb.x, pb.y); x.stroke();
         }
@@ -114,8 +170,13 @@
   addEventListener("resize", function () {
     if (innerWidth !== W || Math.abs(innerHeight - H) > 150) { size(); if (reduce) still(); }
   });
-  if (reduce) { still(); return; }
-  addEventListener("pointermove", function (e) { m.x = e.clientX; m.y = e.clientY; m.on = true; m.last = performance.now(); });
-  document.addEventListener("pointerleave", function () { m.on = false; });
+  if (reduce) { still(); addEventListener("scroll", still, { passive: true }); return; }
+  // touch never counts as a mouse: the net keeps roaming on its own
+  addEventListener("pointermove", function (e) {
+    if (e.pointerType === "touch") { m.on = false; return; }
+    m.x = e.clientX; m.y = e.clientY; m.on = true;
+  });
+  document.documentElement.addEventListener("pointerleave", function () { m.on = false; });
+  addEventListener("blur", function () { m.on = false; });
   requestAnimationFrame(frame);
 })();

@@ -21,9 +21,9 @@ HEAD = '''<!doctype html>
 <link rel="stylesheet" href="assets/style.css"></head>
 '''
 LEGAL_LINKS = '<nav aria-label="Legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Privacy policy</a></nav>'
-LOGO = '<a class="logo" href="{href}" aria-label="Polywerk Studios, home"><img src="assets/polywerk-icon.svg" alt="" width="44" height="44"></a>'
+LOGO = '<a class="logo" href="{href}" aria-label="Polywerk Studios, home"><img src="assets/polywerk-mark.svg" alt="" width="52" height="58"></a>'
 
-rail = ''.join(f'<li><a href="#{i}"><span class="lbl">{t}</span><i></i></a></li>' for i, t in NAV)
+rail = ''.join(f'<li style="--i:{n}"><a href="#{i}"><span class="lbl">{t}</span><i></i></a></li>' for n, (i, t) in enumerate(NAV))
 
 home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <canvas id="net" aria-hidden="true"></canvas>
@@ -37,39 +37,42 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <div class="actions" data-r style="--d:.3s"><a class="btn" href="{DISCORD}">Join our Discord</a></div>
 </div></section>
 
-<section id="games"><div class="wrap g12">
-<div style="--c:1/6"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
-<div class="tile" data-r style="--c:6/13;margin-top:88px">{HEX}<h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div>
+<section id="games"><div class="wrap sec">
+<div class="col-s"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
+<div class="col-m"><div class="tile" data-r style="--d:.15s">{HEX}<h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div>
 </div></section>
 
-<section id="about"><div class="wrap g12">
-<h2 data-r style="--c:1/7">About us</h2>
-<p class="statement" data-r style="--c:3/13;margin-top:-8px">Polywerk Studios is an independent game studio. {SLOGAN}</p>
-<div class="princ" data-r style="--c:1/5">{HEX}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
-<div class="princ" data-r style="--c:5/9;margin-top:56px;--d:.12s">{HEX}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
-<div class="princ" data-r style="--c:9/13;margin-top:112px;--d:.24s">{HEX}<h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
-<p class="muted" data-r style="--c:6/12;margin-top:24px">We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
-</div></section>
-
-<section id="press"><div class="wrap g12">
-<div style="--c:1/8"><h2 data-r>Press &amp; partners</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">Everything you need to write about us or work with us.</p></div>
-<div style="--c:1/6" data-r><h3>Short description</h3><p class="muted" style="margin-top:12px">Polywerk Studios is an independent game studio. {SLOGAN}</p></div>
-<dl class="facts" data-r style="--c:7/13;margin-top:40px;--d:.12s">
-<dt>Name</dt><dd>Polywerk Studios</dd><dt>Type</dt><dd>Independent game studio</dd>
-<dt>Status</dt><dd>First project in development</dd><dt>Press</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></dl>
-<div class="dl" data-r style="--c:2/13">
-<a href="assets/polywerk-logo-horizontal.png" download><div class="thumb"><img src="assets/polywerk-logo-horizontal.png" alt="Polywerk Studios logo, horizontal" loading="lazy"></div><span>Logo, horizontal (PNG)</span></a>
-<a href="assets/polywerk-icon.png" download><div class="thumb"><img src="assets/polywerk-icon.png" alt="Polywerk Studios icon" loading="lazy" style="max-width:55%"></div><span>Icon (PNG)</span></a>
-<a href="assets/polywerk-banner.png" download><div class="thumb"><img src="assets/polywerk-banner.png" alt="Polywerk Studios banner" loading="lazy"></div><span>Banner, 1920 x 1080 (PNG)</span></a>
+<section id="about"><div class="wrap sec">
+<div class="col-s"><h2 data-r>About us</h2></div>
+<div class="col-m">
+<p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio. {SLOGAN}</p>
+<div class="three">
+<div class="princ" data-r>{HEX}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
+<div class="princ" data-r style="--d:.12s">{HEX}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
+<div class="princ" data-r style="--d:.24s">{HEX}<h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
+</div>
+<p class="muted" data-r style="margin-top:56px">We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
 </div>
 </div></section>
 
-<section id="contact"><div class="wrap g12">
-<h2 data-r style="--c:1/6">Contact</h2>
-<div data-r style="--c:6/13;--d:.1s"><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
+<section id="press"><div class="wrap sec">
+<div class="col-s"><h2 data-r>Press &amp; partners</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">Everything you need to write about us or work with us.</p></div>
+<div class="col-m">
+<div data-r><h3>Short description</h3><p class="muted" style="margin-top:12px">Polywerk Studios is an independent game studio. We are happily open to every sponsorship inquiry.</p></div>
+<dl class="facts" data-r style="margin-top:48px;--d:.12s">
+<dt>Name</dt><dd>Polywerk Studios</dd><dt>Type</dt><dd>Independent game studio</dd>
+<dt>Status</dt><dd>First project in development</dd><dt>Press</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></dl>
+</div>
+</div></section>
+
+<section id="contact"><div class="wrap sec">
+<div class="col-s"><h2 data-r>Contact</h2></div>
+<div class="col-m two">
+<div data-r><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
 <div class="actions"><a class="btn" href="{DISCORD}">Join our Discord</a></div></div>
-<div data-r style="--c:3/10;margin-top:24px"><h3>Business inquiries</h3><p class="muted" style="margin-top:12px">Sponsors and partners are welcome to contact us by email.</p>
+<div data-r style="--d:.12s"><h3>Business inquiries</h3><p class="muted" style="margin-top:12px">Sponsors and partners are welcome to contact us by email.</p>
 <p><a class="mail" href="mailto:{MAIL}">{MAIL}</a></p></div>
+</div>
 </div></section>
 
 </main>
