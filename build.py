@@ -1,4 +1,4 @@
-# Generates the HTML pages. Run: python3 build.py
+# Generates all HTML pages. Change texts here, then run: python3 build.py
 MAIL = 'polywerk.business@gmail.com'
 DISCORD = 'https://discord.gg/nbb7JpqRh4'
 SLOGAN = "We're a small team building games with passion."
@@ -20,6 +20,11 @@ ICON_TEAM = hexsvg('<circle cx="511" cy="440" r="58"/><path d="M401,650 C401,570
 ICON_CHAT = hexsvg('<path d="M386,391 H636 A45,45 0 0 1 681,436 V536 A45,45 0 0 1 636,581 H541 L451,651 V581 H386 A45,45 0 0 1 341,536 V436 A45,45 0 0 1 386,391 Z"/><path d="M416,461 H606 M416,511 H546"/>')
 ICON_HEART = hexsvg('<path d="M511,650 C395,565 345,505 345,450 C345,405 380,378 422,378 C462,378 494,402 511,438 C528,402 560,378 600,378 C642,378 677,405 677,450 C677,505 627,565 511,650 Z"/>')
 
+# Small UI icons (24px grid)
+SVG = '<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{d}"/></svg>'
+ARROW = SVG.format(cls='i-arrow', d='M12 4v15M6 13l6 6 6-6')
+CHAT = SVG.format(cls='i-chat', d='M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z')
+
 HEAD = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
@@ -27,22 +32,31 @@ HEAD = '''<!doctype html>
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:image" content="assets/polywerk-banner.png">
 <meta name="theme-color" content="#FAF8F3">
 <script>document.documentElement.className+=" js"</script>
-<link rel="icon" href="assets/polywerk-icon.svg" type="image/svg+xml"><link rel="preload" href="assets/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="assets/polywerk-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css"></head>
 '''
 LEGAL_LINKS = '<nav aria-label="Legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Privacy policy</a></nav>'
 LOGO = '<a class="logo" href="{href}" aria-label="Polywerk Studios, home"><img src="assets/polywerk-mark.svg" alt="" width="52" height="58"></a>'
+COPY = '<span>&copy; 2026 Polywerk Studios</span>'
 
-rail = ''.join(f'<li style="--i:{n}"><a href="#{i}"><span class="lbl">{t}</span><i></i></a></li>' for n, (i, t) in enumerate(NAV))
 
-home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
-<canvas id="net" aria-hidden="true"></canvas><div class="progress" aria-hidden="true"></div>
+def foot(extra='', cls=''):
+    return f'<footer{cls}><div class="wrap"><div class="foot">{COPY}{extra}{LEGAL_LINKS}</div></div></footer>'
+
+
+rail = ''.join(f'<li><a href="#{i}">{t}</a></li>' for i, t in NAV)
+
+home = HEAD.format(title='Polywerk Studios | Independent game studio',
+                   desc="Polywerk Studios is an independent game studio. " + SLOGAN) + f'''<body>
+<a class="btn skip" href="#main">Skip to content</a>
+<canvas id="net" aria-hidden="true"></canvas>
 {LOGO.format(href='#home')}
 <nav class="rail" aria-label="Main"><button class="rail-btn" type="button" aria-expanded="false">Menu</button><ul>{rail}</ul></nav>
-<a class="fab" href="#contact" aria-label="Contact us"><span>Contact us</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg></a>
-<main>
+<a class="fab" href="#contact"><span>Contact us</span> {ARROW}{CHAT}</a>
+<main id="main" tabindex="-1">
 
-<section id="home">
+<section id="home" tabindex="-1">
 <div class="intro"><img data-fade class="intro-d" src="assets/polywerk-banner.svg" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"><div class="intro-m"><img data-fade src="assets/polywerk-mark.svg" alt="Polywerk Studios" width="1024" height="1024"></div></div>
 <div class="hero"><div class="wrap">
 <div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
@@ -52,50 +66,50 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 </div></div>
 </section>
 
-<section id="games"><div class="wrap sec">
+<section id="games" tabindex="-1"><div class="wrap sec">
 <span class="rule" data-r></span>
-<div class="col-s"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
-<div class="col-m"><div class="tile3d" data-r style="--d:.15s"><div class="tile"><span class="ghost" aria-hidden="true">{HEX}</span>{HEX}<h3 class="statement" style="font-size:clamp(1.2rem,2vw,1.5rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div></div>
+<div class="col-s"><h2 data-r>Games</h2><p class="lead sub d1" data-r>Nothing to play just yet.</p></div>
+<div class="col-m"><div class="tile3d d1" data-r><div class="tile"><span class="ghost" aria-hidden="true">{HEX}</span>{HEX}<h3 class="statement">Our first project is in development.</h3><p class="muted">We'll share more here as soon as we can.</p><p><a class="tlink" href="{DISCORD}">Follow along on Discord</a></p></div></div></div>
 </div></section>
 
-<section id="about"><div class="wrap sec">
+<section id="about" tabindex="-1"><div class="wrap sec">
 <span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>About us</h2></div>
 <div class="col-m">
-<p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio.</p>
+<p class="statement d1" data-r>Polywerk Studios is an independent game studio.</p>
 <div class="three">
-<div class="princ" data-r>{ICON_TEAM}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
-<div class="princ" data-r style="--d:.12s">{ICON_CHAT}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
-<div class="princ" data-r style="--d:.24s">{ICON_HEART}<h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
+<div class="princ" data-r>{ICON_TEAM}<h3>Small team</h3><p class="muted">Quick decisions and close attention to every detail.</p></div>
+<div class="princ d1" data-r>{ICON_CHAT}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
+<div class="princ d2" data-r>{ICON_HEART}<h3>Made with passion</h3><p class="muted">We make the games we want to play ourselves.</p></div>
 </div>
-<p class="muted" data-r style="margin-top:56px">We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
+<p class="muted after" data-r>We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
 </div>
 </div></section>
 
-<section id="press"><div class="wrap sec">
+<section id="press" tabindex="-1"><div class="wrap sec">
 <span class="rule" data-r></span>
-<div class="col-s"><h2 data-r>Press &amp; partners</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">Everything you need to write about us or work with us.</p></div>
+<div class="col-s"><h2 data-r>Press &amp; partners</h2><p class="lead sub d1" data-r>Key facts for press, sponsors and partners.</p></div>
 <div class="col-m">
-<div data-r><h3>Short description</h3><p class="muted" style="margin-top:12px">Polywerk Studios is an independent game studio. We are happily open to every sponsorship inquiry.</p></div>
-<dl class="facts" data-r style="margin-top:48px;--d:.12s">
+<div class="blk" data-r><h3>Short description</h3><p class="muted">Polywerk Studios is an independent game studio. We are always happy to hear from sponsors and partners.</p></div>
+<dl class="facts d1" data-r>
 <dt>Name</dt><dd>Polywerk Studios</dd><dt>Type</dt><dd>Independent game studio</dd>
-<dt>Status</dt><dd>First project in development</dd><dt>Press</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></dl>
+<dt>Status</dt><dd>First project in development</dd><dt>Contact</dt><dd><a href="mailto:{MAIL}">{MAIL}</a></dd></dl>
 </div>
 </div></section>
 
-<section id="contact"><div class="wrap sec">
+<section id="contact" tabindex="-1"><div class="wrap sec">
 <span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>Contact</h2></div>
 <div class="col-m two">
-<div data-r><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
+<div class="blk" data-r><h3>Player support</h3><p class="muted">Have a question or found a bug? Discord is the fastest way to reach us.</p>
 <div class="actions"><a class="btn discord" href="{DISCORD}">Join our Discord</a></div></div>
-<div data-r style="--d:.12s"><h3>Business inquiries</h3><p class="muted" style="margin-top:12px">Sponsors and partners are welcome to contact us by email.</p>
+<div class="blk d1" data-r><h3>Business inquiries</h3><p class="muted">Sponsors and partners are welcome to contact us by email.</p>
 <p><a class="mail" href="mailto:{MAIL}">{MAIL}</a></p></div>
 </div>
 </div></section>
 
 </main>
-<footer class="side"><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></div></footer>
+{foot('<a href="#home">Back to top</a>', ' class="side"')}
 <script src="assets/site.js" defer></script>
 </body></html>
 '''
@@ -106,7 +120,7 @@ def legal(fn, title, text):
     open(fn + '.html', 'w').write(HEAD.format(title=f'{title} | Polywerk Studios', desc=title) + f'''<body>
 <header class="wrap bar">{LOGO.format(href='index.html')}<a href="index.html">Back to home</a></header>
 <main class="wrap legal"><h1>{title}</h1><p class="lead">{text}</p></main>
-<footer><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></div></footer>
+{foot()}
 </body></html>
 ''')
 
@@ -114,15 +128,14 @@ def legal(fn, title, text):
 legal('impressum', 'Impressum', 'Placeholder. The legal notice will be added before launch.')
 legal('datenschutz', 'Privacy policy', 'Placeholder. The privacy policy will be added before launch.')
 
-
 # 404 page: GitHub Pages serves it for unknown URLs at any depth, so a <base> makes the relative links work
 BASE_SCRIPT = ('<script>if(/^https?:/.test(location.protocol)){var p=location.pathname.split("/");'
                'document.write(\'<base href="\'+(/\\.github\\.io$/.test(location.hostname)?"/"+p[1]+"/":"/")+\'">\')}</script>\n')
 page404 = HEAD.format(title='Page not found | Polywerk Studios', desc='Page not found').replace('<link rel="icon"', BASE_SCRIPT + '<link rel="icon"', 1)
 page404 += f'''<body>
-<main class="wrap legal" style="text-align:center;padding-block:15vh 120px"><img src="assets/polywerk-mark.svg" alt="" width="120" height="120" style="display:block;margin:0 auto 32px"><h1>This polygon got lost.</h1>
-<p class="lead" style="margin:0 auto 36px">The page you are looking for does not exist.</p><a class="btn" href="index.html">Back to home</a></main>
-<footer><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></div></footer>
+<main class="wrap legal nf"><img src="assets/polywerk-mark.svg" alt="" width="120" height="120"><h1>This polygon got lost.</h1>
+<p class="lead">The page you are looking for does not exist.</p><a class="btn" href="index.html">Back to home</a></main>
+{foot()}
 </body></html>
 '''
 open('404.html', 'w').write(page404)
