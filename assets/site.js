@@ -1,6 +1,10 @@
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
+  // Playful tab title while the tab is in the background
+  var title = document.title;
+  document.addEventListener("visibilitychange", function () { document.title = document.hidden ? "Psst, we're still here." : title; });
+
   // Scroll reveal: toggles both ways, so animations replay on every pass
   var els = document.querySelectorAll("[data-r]");
   if ("IntersectionObserver" in window) {

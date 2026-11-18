@@ -95,7 +95,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 </div></section>
 
 </main>
-<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></footer>
+<footer class="side"><div class="wrap"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></footer>
 <script src="assets/site.js" defer></script>
 </body></html>
 '''
@@ -113,3 +113,16 @@ def legal(fn, title, text):
 
 legal('impressum', 'Impressum', 'Placeholder. The legal notice will be added before launch.')
 legal('datenschutz', 'Privacy policy', 'Placeholder. The privacy policy will be added before launch.')
+
+
+# 404 page: GitHub Pages serves it for unknown URLs at any depth, so a <base> makes the relative links work
+BASE_SCRIPT = ('<script>if(/^https?:/.test(location.protocol)){var p=location.pathname.split("/");'
+               'document.write(\'<base href="\'+(/\\.github\\.io$/.test(location.hostname)?"/"+p[1]+"/":"/")+\'">\')}</script>\n')
+page404 = HEAD.format(title='Page not found | Polywerk Studios', desc='Page not found').replace('<link rel="icon"', BASE_SCRIPT + '<link rel="icon"', 1)
+page404 += f'''<body>
+<main class="wrap legal" style="text-align:center;padding-block:15vh 120px"><img src="assets/polywerk-mark.svg" alt="" width="120" height="120" style="display:block;margin:0 auto 32px"><h1>This polygon got lost.</h1>
+<p class="lead" style="margin:0 auto 36px">The page you are looking for does not exist.</p><a class="btn" href="index.html">Back to home</a></main>
+<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></footer>
+</body></html>
+'''
+open('404.html', 'w').write(page404)

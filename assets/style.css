@@ -43,7 +43,7 @@ body.past .logo{opacity:1;pointer-events:auto}
 .rail a:hover{color:var(--text);transform:translateX(8px)}
 .rail a.on{color:var(--text);transform:translateX(14px)}
 .rail-btn{display:none;font:inherit;font-weight:700;font-stretch:112%;font-size:.9rem;color:var(--text);background:var(--bg);border:1px solid var(--text);padding:8px 16px;cursor:pointer}
-@media (min-width:1000px){main>section:not(#home),.hero,footer{padding-left:240px}}
+@media (min-width:1000px){main>section:not(#home),.hero,footer.side{padding-left:240px}}
 @media (max-width:999px){
   .rail{left:auto;top:14px;right:14px;transform:none}
   .rail-btn{display:block;margin-left:auto}
