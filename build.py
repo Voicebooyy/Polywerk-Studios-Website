@@ -88,14 +88,14 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <div class="col-s"><h2 data-r>Contact</h2></div>
 <div class="col-m two">
 <div data-r><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
-<div class="actions"><a class="btn" href="{DISCORD}">Join our Discord</a></div></div>
+<div class="actions"><a class="btn discord" href="{DISCORD}">Join our Discord</a></div></div>
 <div data-r style="--d:.12s"><h3>Business inquiries</h3><p class="muted" style="margin-top:12px">Sponsors and partners are welcome to contact us by email.</p>
 <p><a class="mail" href="mailto:{MAIL}">{MAIL}</a></p></div>
 </div>
 </div></section>
 
 </main>
-<footer class="side"><div class="wrap"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></footer>
+<footer class="side"><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></div></footer>
 <script src="assets/site.js" defer></script>
 </body></html>
 '''
@@ -106,7 +106,7 @@ def legal(fn, title, text):
     open(fn + '.html', 'w').write(HEAD.format(title=f'{title} | Polywerk Studios', desc=title) + f'''<body>
 <header class="wrap bar">{LOGO.format(href='index.html')}<a href="index.html">Back to home</a></header>
 <main class="wrap legal"><h1>{title}</h1><p class="lead">{text}</p></main>
-<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></footer>
+<footer><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></div></footer>
 </body></html>
 ''')
 
@@ -122,7 +122,7 @@ page404 = HEAD.format(title='Page not found | Polywerk Studios', desc='Page not 
 page404 += f'''<body>
 <main class="wrap legal" style="text-align:center;padding-block:15vh 120px"><img src="assets/polywerk-mark.svg" alt="" width="120" height="120" style="display:block;margin:0 auto 32px"><h1>This polygon got lost.</h1>
 <p class="lead" style="margin:0 auto 36px">The page you are looking for does not exist.</p><a class="btn" href="index.html">Back to home</a></main>
-<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></footer>
+<footer><div class="wrap"><div class="foot"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></div></footer>
 </body></html>
 '''
 open('404.html', 'w').write(page404)
