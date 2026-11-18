@@ -55,7 +55,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <section id="games"><div class="wrap sec">
 <span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
-<div class="col-m"><div class="tile3d" data-r style="--d:.15s"><div class="tile"><span class="ghost" aria-hidden="true">{HEX}</span>{HEX}<h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div></div>
+<div class="col-m"><div class="tile3d" data-r style="--d:.15s"><div class="tile"><span class="ghost" aria-hidden="true">{HEX}</span>{HEX}<h3 class="statement" style="font-size:clamp(1.2rem,2vw,1.5rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div></div>
 </div></section>
 
 <section id="about"><div class="wrap sec">
