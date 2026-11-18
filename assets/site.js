@@ -37,8 +37,8 @@
         var d = +l.dataset.depth;
         l.style.transform = "translate3d(" + (-px * d * 46).toFixed(1) + "px," + (-sy * d * 0.22 - py * d * 46).toFixed(1) + "px,0)";
       });
-      var ib = document.querySelector(".intro img");
-      if (ib) { var pr = Math.min(1, sy / (H * 0.85)); ib.style.opacity = (1 - pr).toFixed(3); ib.style.transform = "translate3d(0," + (sy * 0.35).toFixed(1) + "px,0) scale(" + (1 - pr * 0.07).toFixed(3) + ")"; }
+      document.querySelectorAll(".intro [data-fade]").forEach(function (ib) {
+        var pr = Math.min(1, sy / (H * 0.85)); ib.style.opacity = (1 - pr).toFixed(3); ib.style.transform = "translate3d(0," + (sy * 0.35).toFixed(1) + "px,0) scale(" + (1 - pr * 0.07).toFixed(3) + ")"; });
       if (band) band.style.transform = "translate3d(" + (-(H - band.parentNode.getBoundingClientRect().top) * 0.45).toFixed(1) + "px,0,0)";
       requestAnimationFrame(loop);
     })();
@@ -99,7 +99,7 @@
   // left) it roams on its own.
   var c = document.getElementById("net");
   if (!c) return;
-  var x = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, P = [], G = 60, R = 125;
+  var x = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2), W = 0, H = 0, P = [], G = 60, R = 125, A = 1;
   var m = { x: 0, y: 0, on: false }, ctr = { x: -999, y: -999 };
   var INK = "20,20,20";
 
@@ -107,7 +107,8 @@
     W = innerWidth; H = innerHeight;
     c.width = W * dpr; c.height = H * dpr;
     x.setTransform(dpr, 0, 0, dpr, 0, 0);
-    G = Math.max(56, Math.sqrt(W * H / 650));
+    var small = W < 760; A = small ? 0.6 : 1;
+    G = Math.max(small ? 80 : 56, Math.sqrt(W * H / (small ? 420 : 650)));
     P = [];
     for (var i = -1; i * G < W + G; i++) for (var j = -1; j * G < H + G; j++) {
       var hx = i * G + (Math.random() - 0.5) * G * 0.75, hy = j * G + (Math.random() - 0.5) * G * 0.75;
@@ -134,18 +135,18 @@
       var fx = (p.hx - p.x) * 0.06, fy = (p.hy - p.y) * 0.06, k = 0;
       if (d < R) { k = 1 - d / R; fx += dx * k * 0.05; fy += dy * k * 0.05; p.k = k; near.push(p); }
       p.vx = (p.vx + fx) * 0.82; p.vy = (p.vy + fy) * 0.82; p.x += p.vx; p.y += p.vy;
-      x.fillStyle = "rgba(" + INK + "," + (0.22 + k * 0.5) + ")";
+      x.fillStyle = "rgba(" + INK + "," + (0.22 + k * 0.5) * A + ")";
       x.beginPath(); x.arc(p.x, p.y, 1.4 + k * 1.6, 0, 6.3); x.fill();
     }
     x.lineWidth = 1;
     for (var a = 0; a < near.length; a++) {
       var pa = near[a];
-      x.strokeStyle = "rgba(" + INK + "," + pa.k * 0.5 + ")";
+      x.strokeStyle = "rgba(" + INK + "," + pa.k * 0.5 * A + ")";
       x.beginPath(); x.moveTo(pa.x, pa.y); x.lineTo(mx, my); x.stroke();
       for (var b = a + 1; b < near.length; b++) {
         var pb = near[b], ex = pa.x - pb.x, ey = pa.y - pb.y;
         if (ex * ex + ey * ey < G * G * 1.6) {
-          x.strokeStyle = "rgba(" + INK + "," + Math.min(pa.k, pb.k) * 0.28 + ")";
+          x.strokeStyle = "rgba(" + INK + "," + Math.min(pa.k, pb.k) * 0.28 * A + ")";
           x.beginPath(); x.moveTo(pa.x, pa.y); x.lineTo(pb.x, pb.y); x.stroke();
         }
       }

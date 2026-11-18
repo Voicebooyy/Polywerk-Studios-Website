@@ -39,11 +39,11 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <canvas id="net" aria-hidden="true"></canvas><div class="progress" aria-hidden="true"></div>
 {LOGO.format(href='#home')}
 <nav class="rail" aria-label="Main"><button class="rail-btn" type="button" aria-expanded="false">Menu</button><ul>{rail}</ul></nav>
-<a class="fab" href="#contact">Contact us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg></a>
+<a class="fab" href="#contact" aria-label="Contact us"><span>Contact us</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg></a>
 <main>
 
 <section id="home">
-<div class="intro"><img src="assets/polywerk-banner.png" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"></div>
+<div class="intro"><img data-fade class="intro-d" src="assets/polywerk-banner.svg" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"><div class="intro-m"><img data-fade src="assets/polywerk-mark.svg" alt="Polywerk Studios" width="1024" height="1024"></div></div>
 <div class="hero"><div class="wrap">
 <div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
 <div class="hx hx2" data-depth="1" aria-hidden="true">{HEX}</div>
