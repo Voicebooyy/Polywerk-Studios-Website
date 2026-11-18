@@ -6,7 +6,7 @@ NAV = [('home', 'Home'), ('games', 'Games'), ('about', 'About'), ('press', 'Pres
 
 # Hexagon frame with diamonds, taken from the logo
 HEX = ('<svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none">'
-       '<path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g>'
+       '<path pathLength="1" d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g>'
        '<g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z '
        'M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg>')
 
@@ -23,26 +23,34 @@ HEAD = '''<!doctype html>
 LEGAL_LINKS = '<nav aria-label="Legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Privacy policy</a></nav>'
 LOGO = '<a class="logo" href="{href}" aria-label="Polywerk Studios, home"><img src="assets/polywerk-mark.svg" alt="" width="52" height="58"></a>'
 
+TRACK = '<span>POLYWERK</span><span>STUDIOS</span>' * 8
 rail = ''.join(f'<li style="--i:{n}"><a href="#{i}"><span class="lbl">{t}</span><i></i></a></li>' for n, (i, t) in enumerate(NAV))
 
 home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
-<canvas id="net" aria-hidden="true"></canvas>
+<canvas id="net" aria-hidden="true"></canvas><div class="progress" aria-hidden="true"></div>
 {LOGO.format(href='#home')}
 <nav class="rail" aria-label="Main"><button class="rail-btn" type="button" aria-expanded="false">Menu</button><ul>{rail}</ul></nav>
 <main>
 
 <section id="home" class="hero"><div class="wrap">
+<div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
+<div class="hx hx2" data-depth="1" aria-hidden="true">{HEX}</div>
+<div class="hx hx3" data-depth="1.8" aria-hidden="true">{HEX}</div>
 <h1 data-r><span>Polywerk</span><span>Studios</span></h1>
 <p class="lead" data-r style="--d:.15s">{SLOGAN}</p>
-<div class="actions" data-r style="--d:.3s"><a class="btn" href="{DISCORD}">Join our Discord</a></div>
+<div class="cue" aria-hidden="true"><i></i></div>
 </div></section>
 
+<div class="band" aria-hidden="true"><div class="track" data-band>{TRACK}</div></div>
+
 <section id="games"><div class="wrap sec">
+<span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
-<div class="col-m"><div class="tile" data-r style="--d:.15s">{HEX}<h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div>
+<div class="col-m"><div class="tile3d" data-r style="--d:.15s"><div class="tile"><span class="ghost" aria-hidden="true">{HEX}</span>{HEX}<h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div></div></div>
 </div></section>
 
 <section id="about"><div class="wrap sec">
+<span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>About us</h2></div>
 <div class="col-m">
 <p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio. {SLOGAN}</p>
@@ -56,6 +64,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 </div></section>
 
 <section id="press"><div class="wrap sec">
+<span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>Press &amp; partners</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">Everything you need to write about us or work with us.</p></div>
 <div class="col-m">
 <div data-r><h3>Short description</h3><p class="muted" style="margin-top:12px">Polywerk Studios is an independent game studio. We are happily open to every sponsorship inquiry.</p></div>
@@ -66,6 +75,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 </div></section>
 
 <section id="contact"><div class="wrap sec">
+<span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>Contact</h2></div>
 <div class="col-m two">
 <div data-r><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
@@ -76,7 +86,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 </div></section>
 
 </main>
-<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span>{LEGAL_LINKS}</div></footer>
+<footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span><a class="back" href="#home">Back to top</a>{LEGAL_LINKS}</div></footer>
 <script src="assets/site.js" defer></script>
 </body></html>
 '''
