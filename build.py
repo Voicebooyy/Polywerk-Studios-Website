@@ -4,11 +4,21 @@ DISCORD = 'https://discord.gg/nbb7JpqRh4'
 SLOGAN = "We're a small team building games with passion."
 NAV = [('home', 'Home'), ('games', 'Games'), ('about', 'About'), ('press', 'Press & partners'), ('contact', 'Contact')]
 
-# Hexagon frame with diamonds, taken from the logo
-HEX = ('<svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none">'
-       '<path pathLength="1" d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g>'
-       '<g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z '
-       'M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg>')
+# Hexagon frame with diamonds (from the logo); optional icon drawn inside
+FRAME = '<g stroke="currentColor" stroke-width="34" fill="none"><path pathLength="1" d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g>'
+DIAM = ('<g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z '
+        'M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g>')
+
+
+def hexsvg(icon=''):
+    ic = f'<g class="ic" fill="none" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">{icon}</g>' if icon else ''
+    return f'<svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true">{FRAME}{ic}{DIAM}</svg>'
+
+
+HEX = hexsvg()
+ICON_TEAM = hexsvg('<circle cx="511" cy="440" r="58"/><path d="M401,650 C401,570 450,545 511,545 C572,545 621,570 621,650"/><circle cx="362" cy="478" r="38"/><path d="M296,640 C296,590 322,566 362,566"/><circle cx="660" cy="478" r="38"/><path d="M726,640 C726,590 700,566 660,566"/>')
+ICON_CHAT = hexsvg('<path d="M386,391 H636 A45,45 0 0 1 681,436 V536 A45,45 0 0 1 636,581 H541 L451,651 V581 H386 A45,45 0 0 1 341,536 V436 A45,45 0 0 1 386,391 Z"/><path d="M416,461 H606 M416,511 H546"/>')
+ICON_HEART = hexsvg('<path d="M511,650 C395,565 345,505 345,450 C345,405 380,378 422,378 C462,378 494,402 511,438 C528,402 560,378 600,378 C642,378 677,405 677,450 C677,505 627,565 511,650 Z"/>')
 
 HEAD = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,25 +33,25 @@ HEAD = '''<!doctype html>
 LEGAL_LINKS = '<nav aria-label="Legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Privacy policy</a></nav>'
 LOGO = '<a class="logo" href="{href}" aria-label="Polywerk Studios, home"><img src="assets/polywerk-mark.svg" alt="" width="52" height="58"></a>'
 
-TRACK = '<span>POLYWERK</span><span>STUDIOS</span>' * 8
 rail = ''.join(f'<li style="--i:{n}"><a href="#{i}"><span class="lbl">{t}</span><i></i></a></li>' for n, (i, t) in enumerate(NAV))
 
 home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <canvas id="net" aria-hidden="true"></canvas><div class="progress" aria-hidden="true"></div>
 {LOGO.format(href='#home')}
 <nav class="rail" aria-label="Main"><button class="rail-btn" type="button" aria-expanded="false">Menu</button><ul>{rail}</ul></nav>
+<a class="fab" href="#contact">Contact us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg></a>
 <main>
 
-<section id="home" class="hero"><div class="wrap">
+<section id="home">
+<div class="intro"><img src="assets/polywerk-banner.png" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"></div>
+<div class="hero"><div class="wrap">
 <div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
 <div class="hx hx2" data-depth="1" aria-hidden="true">{HEX}</div>
 <div class="hx hx3" data-depth="1.8" aria-hidden="true">{HEX}</div>
 <h1 data-r><span>Polywerk</span><span>Studios</span></h1>
 <p class="lead" data-r style="--d:.15s">{SLOGAN}</p>
-<div class="cue" aria-hidden="true"><i></i></div>
-</div></section>
-
-<div class="band" aria-hidden="true"><div class="track" data-band>{TRACK}</div></div>
+</div></div>
+</section>
 
 <section id="games"><div class="wrap sec">
 <span class="rule" data-r></span>
@@ -55,9 +65,9 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <div class="col-m">
 <p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio. {SLOGAN}</p>
 <div class="three">
-<div class="princ" data-r>{HEX}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
-<div class="princ" data-r style="--d:.12s">{HEX}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
-<div class="princ" data-r style="--d:.24s">{HEX}<h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
+<div class="princ" data-r>{ICON_TEAM}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
+<div class="princ" data-r style="--d:.12s">{ICON_CHAT}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
+<div class="princ" data-r style="--d:.24s">{ICON_HEART}<h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
 </div>
 <p class="muted" data-r style="margin-top:56px">We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
 </div>

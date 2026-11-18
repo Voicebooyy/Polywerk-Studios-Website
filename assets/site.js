@@ -37,6 +37,8 @@
         var d = +l.dataset.depth;
         l.style.transform = "translate3d(" + (-px * d * 46).toFixed(1) + "px," + (-sy * d * 0.22 - py * d * 46).toFixed(1) + "px,0)";
       });
+      var ib = document.querySelector(".intro img");
+      if (ib) { var pr = Math.min(1, sy / (H * 0.85)); ib.style.opacity = (1 - pr).toFixed(3); ib.style.transform = "translate3d(0," + (sy * 0.35).toFixed(1) + "px,0) scale(" + (1 - pr * 0.07).toFixed(3) + ")"; }
       if (band) band.style.transform = "translate3d(" + (-(H - band.parentNode.getBoundingClientRect().top) * 0.45).toFixed(1) + "px,0,0)";
       requestAnimationFrame(loop);
     })();
@@ -48,9 +50,17 @@
       t.addEventListener("pointerleave", function () { t.style.transform = ""; });
     });
   }
-  if (bar) {
-    var upd = function () { var h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = "scaleX(" + (h > 0 ? scrollY / h : 0) + ")"; };
-    addEventListener("scroll", upd, { passive: true }); upd();
+  var railUl = document.querySelector(".rail ul");
+  var upd = function () {
+    var h = document.documentElement.scrollHeight - innerHeight, f = h > 0 ? Math.min(1, scrollY / h) : 0;
+    if (bar) bar.style.transform = "scaleX(" + f + ")";
+    if (railUl) railUl.style.setProperty("--p", f);
+    document.body.classList.toggle("past", scrollY > innerHeight * 0.6);
+  };
+  addEventListener("scroll", upd, { passive: true }); upd();
+  var ct = document.getElementById("contact");
+  if (ct && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { document.body.classList.toggle("at-contact", en[0].isIntersecting); }, { threshold: 0.35 }).observe(ct);
   }
 
   var rail = document.querySelector(".rail"), btn = document.querySelector(".rail-btn");
