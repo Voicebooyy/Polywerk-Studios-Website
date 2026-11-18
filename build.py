@@ -57,7 +57,7 @@ home = HEAD.format(title='Polywerk Studios | Independent game studio',
 <main id="main" tabindex="-1">
 
 <section id="home" tabindex="-1">
-<div class="intro"><img data-fade class="intro-d" src="assets/polywerk-banner.svg" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"><div class="intro-m"><img data-fade src="assets/polywerk-mark.svg" alt="Polywerk Studios" width="1024" height="1024"></div></div>
+<div class="intro"><img data-fade class="intro-d" src="assets/polywerk-banner.svg" alt="Polywerk Studios" width="1920" height="1080" fetchpriority="high"><div class="intro-m"><div class="intro-m-in" data-fade><img src="assets/polywerk-mark.svg" alt="" width="1024" height="1024"><p class="wordmark">Polywerk Studios</p></div></div></div>
 <div class="hero"><div class="wrap">
 <div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
 <div class="hx hx2" data-depth="1" aria-hidden="true">{HEX}</div>

@@ -93,7 +93,9 @@ body.past.at-contact .fab{visibility:hidden;opacity:0;transform:translateY(28px)
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 150px),linear-gradient(transparent,#000 14%,#000 86%,transparent);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(90deg,transparent,#000 150px),linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-composite:intersect}
 .intro-m{display:none;position:absolute;inset:0;align-items:center;justify-content:center}
-.intro-m img{width:min(64vw,380px);height:auto}
+.intro-m-in{display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
+.intro-m img{width:min(56vw,340px);height:auto}
+.wordmark{margin:0;max-width:none;font-weight:800;font-stretch:var(--wide);font-size:clamp(1.5rem,7.4vw,2.3rem);letter-spacing:-.01em;line-height:1.1}
 
 .hero{min-height:70svh;display:flex;overflow:clip}
 .hero .wrap{position:relative;width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-block:64px 10vh}
@@ -169,7 +171,7 @@ section{padding-block:clamp(64px,8vw,120px)}
 .js .hexmark .ic{opacity:0;transition:opacity .7s 1.1s}
 .js .in .hexmark g:first-child path,.js .hx .hexmark g:first-child path{stroke-dashoffset:0}
 .js .in .hexmark g:last-child,.js .in .hexmark .ic,.js .hx .hexmark g:last-child{opacity:1}
-.js .intro-m img{animation:markIn 1.3s var(--ease) both}
+.js .intro-m-in{animation:markIn 1.3s var(--ease) both}
 body.past .fab svg{animation:bob .9s ease-in-out .4s 2}
 .fab:hover svg{animation:bob .6s ease-in-out infinite}
 @keyframes railIn{to{opacity:1;transform:none}}
@@ -217,7 +219,7 @@ body.past .fab svg{animation:bob .9s ease-in-out .4s 2}
   .js .hexmark g:first-child path{stroke-dashoffset:0;transition:none}
   .js .hexmark g:last-child,.js .hexmark .ic{opacity:1;transition:none}
   .rail li{animation:none;opacity:1;transform:none}
-  .js .intro-m img,body.past .fab svg,.fab:hover svg{animation:none}
+  .js .intro-m-in,body.past .fab svg,.fab:hover svg{animation:none}
   .princ:hover .hexmark>g:not(.ic){transform:none}
   .btn::before,.fab,.fab::before,.tile3d,.hexmark>g,.rail a,.rail ul::after,.rail li::before,.logo{transition:none}
 }
