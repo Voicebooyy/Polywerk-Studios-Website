@@ -3,31 +3,58 @@
 <title>Polywerk Studios</title><meta name="description" content="We're a small team building games with passion.">
 <meta name="robots" content="noindex"><!-- remove before launch -->
 <meta property="og:title" content="Polywerk Studios"><meta property="og:description" content="We're a small team building games with passion."><meta property="og:image" content="assets/polywerk-banner.png">
-<meta name="theme-color" content="#161718">
+<meta name="theme-color" content="#FAF8F3">
 <script>document.documentElement.className+=" js"</script>
 <link rel="icon" href="assets/polywerk-icon.svg" type="image/svg+xml"><link rel="preload" href="assets/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/style.css"></head>
-<body><header class="wrap top"><a class="brand" href="index.html"><img src="assets/polywerk-icon.svg" alt="" width="40" height="40">Polywerk Studios</a><nav aria-label="Main"><a href="index.html" aria-current="page">Home</a><a href="games.html">Games</a><a href="about.html">About</a><a href="press.html">Press & partners</a><a href="contact.html">Contact</a></nav></header>
+<body>
+<canvas id="net" aria-hidden="true"></canvas>
+<a class="logo" href="#home" aria-label="Polywerk Studios, home"><img src="assets/polywerk-icon.svg" alt="" width="44" height="44"></a>
+<nav class="rail" aria-label="Main"><button class="rail-btn" type="button" aria-expanded="false">Menu</button><ul><li><a href="#home"><span class="lbl">Home</span><i></i></a></li><li><a href="#games"><span class="lbl">Games</span><i></i></a></li><li><a href="#about"><span class="lbl">About</span><i></i></a></li><li><a href="#press"><span class="lbl">Press & partners</span><i></i></a></li><li><a href="#contact"><span class="lbl">Contact</span><i></i></a></li></ul></nav>
 <main>
-<div class="hero"><div class="wrap"><svg class="hex-bg" data-r viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg>
-<h1 data-r>Polywerk<br>Studios</h1>
+
+<section id="home" class="hero"><div class="wrap">
+<h1 data-r><span>Polywerk</span><span>Studios</span></h1>
 <p class="lead" data-r style="--d:.15s">We're a small team building games with passion.</p>
 <div class="actions" data-r style="--d:.3s"><a class="btn" href="https://discord.gg/nbb7JpqRh4">Join our Discord</a></div>
-</div></div>
-<section><div class="wrap triple">
-<div data-r><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
-<div data-r style="--d:.12s"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
-<div data-r style="--d:.24s"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
 </div></section>
-<section><div class="wrap">
-<h2 class="statement" data-r>Our first project is in development.</h2>
-<p class="lead" data-r style="--d:.15s;margin-top:24px">We will share more as soon as we can.</p>
-</div></section></main>
+
+<section id="games"><div class="wrap g12">
+<div style="--c:1/6"><h2 data-r>Games</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">There is nothing to play yet.</p></div>
+<div class="tile" data-r style="--c:6/13;margin-top:88px"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3 class="statement" style="font-size:clamp(1.5rem,3vw,2.4rem)">Our first project is in development.</h3><p class="muted">We will share more as soon as we can.</p></div>
+</div></section>
+
+<section id="about"><div class="wrap g12">
+<h2 data-r style="--c:1/7">About us</h2>
+<p class="statement" data-r style="--c:3/13;margin-top:-8px">Polywerk Studios is an independent game studio. We're a small team building games with passion.</p>
+<div class="princ" data-r style="--c:1/5"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
+<div class="princ" data-r style="--c:5/9;margin-top:56px;--d:.12s"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
+<div class="princ" data-r style="--c:9/13;margin-top:112px;--d:.24s"><svg class="hexmark" viewBox="100 40 830 940" aria-hidden="true"><g stroke="currentColor" stroke-width="34" fill="none"><path d="M200,263 L452,116M572,116 L825,263M139,366 L139,657M884,366 L884,657M200,760 L452,907M572,907 L825,760"/></g><g fill="currentColor"><path d="M511,44 L547,80 L511,116 L475,80Z M140,261 L176,297 L140,333 L104,297Z M883,261 L919,297 L883,333 L847,297Z M140,690 L176,726 L140,762 L104,726Z M883,690 L919,726 L883,762 L847,726Z M511,906 L547,942 L511,978 L475,942Z"/></g></svg><h3>Made with passion</h3><p class="muted">We build what we would like to play ourselves.</p></div>
+<p class="muted" data-r style="--c:6/12;margin-top:24px">We want to create games that are enjoyable, carefully made and fair to the people who play them. A friendly and respectful community matters to us.</p>
+</div></section>
+
+<section id="press"><div class="wrap g12">
+<div style="--c:1/8"><h2 data-r>Press &amp; partners</h2><p class="lead" data-r style="--d:.1s;margin-top:20px">Everything you need to write about us or work with us.</p></div>
+<div style="--c:1/6" data-r><h3>Short description</h3><p class="muted" style="margin-top:12px">Polywerk Studios is an independent game studio. We're a small team building games with passion.</p></div>
+<dl class="facts" data-r style="--c:7/13;margin-top:40px;--d:.12s">
+<dt>Name</dt><dd>Polywerk Studios</dd><dt>Type</dt><dd>Independent game studio</dd>
+<dt>Status</dt><dd>First project in development</dd><dt>Press</dt><dd><a href="mailto:polywerk.business@gmail.com">polywerk.business@gmail.com</a></dd></dl>
+<div class="dl" data-r style="--c:2/13">
+<a href="assets/polywerk-logo-horizontal.png" download><div class="thumb"><img src="assets/polywerk-logo-horizontal.png" alt="Polywerk Studios logo, horizontal" loading="lazy"></div><span>Logo, horizontal (PNG)</span></a>
+<a href="assets/polywerk-icon.png" download><div class="thumb"><img src="assets/polywerk-icon.png" alt="Polywerk Studios icon" loading="lazy" style="max-width:55%"></div><span>Icon (PNG)</span></a>
+<a href="assets/polywerk-banner.png" download><div class="thumb"><img src="assets/polywerk-banner.png" alt="Polywerk Studios banner" loading="lazy"></div><span>Banner, 1920 x 1080 (PNG)</span></a>
+</div>
+</div></section>
+
+<section id="contact"><div class="wrap g12">
+<h2 data-r style="--c:1/6">Contact</h2>
+<div data-r style="--c:6/13;--d:.1s"><h3>Player support</h3><p class="muted" style="margin-top:12px">Do you have a question or found a problem? Discord is the fastest way to reach us.</p>
+<div class="actions"><a class="btn" href="https://discord.gg/nbb7JpqRh4">Join our Discord</a></div></div>
+<div data-r style="--c:3/10;margin-top:24px"><h3>Business inquiries</h3><p class="muted" style="margin-top:12px">Sponsors and partners are welcome to contact us by email.</p>
+<p><a class="mail" href="mailto:polywerk.business@gmail.com">polywerk.business@gmail.com</a></p></div>
+</div></section>
+
+</main>
 <footer><div class="wrap"><span>&copy; 2026 Polywerk Studios</span><nav aria-label="Legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Privacy policy</a></nav></div></footer>
-<script>
-(function(){var els=document.querySelectorAll("[data-r]");
-if(!("IntersectionObserver"in window)){els.forEach(function(e){e.classList.add("in")});return}
-var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{threshold:.15});
-els.forEach(function(e){io.observe(e)})})();
-</script>
+<script src="assets/site.js" defer></script>
 </body></html>
