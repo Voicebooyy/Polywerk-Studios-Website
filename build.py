@@ -48,8 +48,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <div class="hx hx1" data-depth="0.5" aria-hidden="true">{HEX}</div>
 <div class="hx hx2" data-depth="1" aria-hidden="true">{HEX}</div>
 <div class="hx hx3" data-depth="1.8" aria-hidden="true">{HEX}</div>
-<h1 data-r><span>Polywerk</span><span>Studios</span></h1>
-<p class="lead" data-r style="--d:.15s">{SLOGAN}</p>
+<h1 data-r>{SLOGAN}</h1>
 </div></div>
 </section>
 
@@ -63,7 +62,7 @@ home = HEAD.format(title='Polywerk Studios', desc=SLOGAN) + f'''<body>
 <span class="rule" data-r></span>
 <div class="col-s"><h2 data-r>About us</h2></div>
 <div class="col-m">
-<p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio. {SLOGAN}</p>
+<p class="statement" data-r style="--d:.1s">Polywerk Studios is an independent game studio.</p>
 <div class="three">
 <div class="princ" data-r>{ICON_TEAM}<h3>Small team</h3><p class="muted">Short ways and personal care for every detail.</p></div>
 <div class="princ" data-r style="--d:.12s">{ICON_CHAT}<h3>Direct contact</h3><p class="muted">You can talk to us on Discord or by email.</p></div>
